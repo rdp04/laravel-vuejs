@@ -3,20 +3,11 @@
     <a href="index3.html" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">TES PROGRAM</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -27,7 +18,7 @@
             <router-link to="data-user" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Starter Pages
+                Menu
                 <i class="right fas fa-angle-left"></i>
               </p>
             </router-link>
@@ -39,9 +30,33 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="data-karyawan" class="nav-link ">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Data Karyawan</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to="data-barang" class="nav-link ">
                   <i class="fas fa-dolly-flatbed nav-icon"></i>
                   <p>Data Barang</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="data-departemen" class="nav-link ">
+                  <i class="fas fa-dolly-flatbed nav-icon"></i>
+                  <p>Data Departemen</p>
+                </router-link>
+              </li>
+              {{-- <li class="nav-item">
+                <router-link to="data-permintaan" class="nav-link ">
+                  <i class="fas fa-dolly-flatbed nav-icon"></i>
+                  <p>Data Permintaan</p>
+                </router-link>
+              </li> --}}
+              <li class="nav-item">
+                <router-link to="data-po" class="nav-link ">
+                  <i class="fas fa-dolly-flatbed nav-icon"></i>
+                  <p>Data PO</p>
                 </router-link>
               </li>
               <li class="nav-item">

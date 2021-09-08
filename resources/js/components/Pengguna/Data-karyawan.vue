@@ -5,10 +5,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Data User
+                            Data Karyawan
                         </h3>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-success" @click="showModal">Tambah Pengguna</button>
+                            <button type="button" class="btn btn-success" @click="showModal">Tambah Karyawan</button>
 
                         </div>
                     </div>
@@ -20,15 +20,15 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama</th>
+                                        <th>NIK</th>
                                         <th>Departemen</th>
-                                        <th>Email</th>
                                         <th>*</th>
                                     </tr>
-                                    <tr v-for="item in users" :key="item.id">
+                                    <tr v-for="item in karyawans" :key="item.id">
                                         <td></td>
-                                        <td>{{item.name}}</td>
+                                        <td>{{item.nama}}</td>
+                                        <td>{{item.nik}}</td>
                                         <td>{{item.departemen_id}}</td>
-                                        <td>{{item.email}}</td>
                                         <td>
                                             <a href="#" @click="showModalEdit(item)"><i class="fa fa-edit blue"></i> Edit</a>
                                             | 
@@ -47,8 +47,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle" v-show="!statusmodal">Tambah Pengguna</h5>
-                    <h5 class="modal-title" id="exampleModalCenterTitle" v-show="statusmodal">Ubah Pengguna</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle" v-show="!statusmodal">Tambah Karyawan</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle" v-show="statusmodal">Ubah Data Karyawan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -56,8 +56,12 @@
                 <form @submit.prevent="statusmodal ? ubahData() : simpanData()">
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" v-model="form.name" class="form-control" placeholder="Nama Karyawan" :class="{'is-invalid' : form.errors.has('name')}" required>
-                            <has-error :form="form" field="name"></has-error>
+                            <input type="text" v-model="form.nama" class="form-control" placeholder="Nama Karyawan" :class="{'is-invalid' : form.errors.has('nama')}" required>
+                            <has-error :form="form" field="nama"></has-error>
+                        </div>
+                         <div class="form-group">
+                            <input v-model="form.nik" type="text" class="form-control" placeholder="nik" :class="{'is-invalid' : form.errors.has('nik')}" required>
+                            <has-error :form="form" field="nik"></has-error>
                         </div>
                         <div class="form-group">
                             <select v-model="form.departemen_id" class="form-control select2" :class="{'is-invalid' : form.errors.has('departemen_id')}" required>
@@ -65,14 +69,6 @@
                                 <option v-for="item in departemens" :key="item.id" :value="item.id">{{item.nama_departemen}}</option>
                             </select>
                                 <has-error :form="form" field="departemen_id"></has-error>
-                        </div>
-                        <div class="form-group">
-                            <input v-model="form.email" type="text" class="form-control" placeholder="Email" :class="{'is-invalid' : form.errors.has('email')}" required>
-                            <has-error :form="form" field="email"></has-error>
-                        </div>
-                        <div class="form-group">
-                            <input v-model="form.password" type="password" class="form-control" placeholder="Password" :class="{'is-invalid' : form.errors.has('password')}" required>
-                            <has-error :form="form" field="password"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -96,14 +92,13 @@ import Form from 'vform'
                 loading: false,
                 disabled: false,
                 departemens: {},
-                users: {},
+                karyawans: {},
                 statusmodal:false,
                 form: new Form({
                     id:"",
-                    name:"",
-                    departemen_id:"",
-                    email:"",
-                    password:""
+                    nama:"",
+                    nik:"",
+                    departemen_id:""
                 })
                 
             };
@@ -126,8 +121,8 @@ import Form from 'vform'
                 .get('api/ambildatadepartemen')
                 .then(({data})=>(this.departemens = data));
                 axios
-                .get('api/user')
-                .then(({data})=>(this.users = data));
+                .get('api/karyawan')
+                .then(({data})=>(this.karyawans = data));
                 this.$Progress.finish();
             },
             simpanData(){
@@ -135,7 +130,7 @@ import Form from 'vform'
                 this.loading = true;
                 this.disabled= true;
                 this.form
-                .post('api/user').then(() => {
+                .post('api/karyawan').then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
                     Toast.fire({
@@ -157,7 +152,7 @@ import Form from 'vform'
                 this.loading = true;
                 this.disabled= true;
                 this.form
-                .put('api/user/' + this.form.id).then(() => {
+                .put('api/karyawan/' + this.form.id).then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
                     Toast.fire({
@@ -186,7 +181,7 @@ import Form from 'vform'
                 }).then(result =>{
                     if(result.value){
                         this.form
-                        .delete("api/user/" + id)
+                        .delete("api/karyawan/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
